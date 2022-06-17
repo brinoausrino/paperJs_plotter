@@ -1,7 +1,7 @@
 const { CompoundPath, Point, Group, Path, Layer } = require('paper-jsdom-canvas');
 
 module.exports.createCanvasFromJson = function (json, paper) {
-    let canvas = paper.createCanvas(json.size[0], json.size[0]);
+    let canvas = paper.createCanvas(json.size[0], json.size[1]);
     paper.setup(canvas);
     for (let layer of json.layers) {
         let l = new Layer({
@@ -12,6 +12,14 @@ module.exports.createCanvasFromJson = function (json, paper) {
         });
     }
     return canvas;
+}
+
+module.exports.setActiveLayer = function (layerName, paper) {
+    for (let layer of paper.project.layers) {
+        if(layer.name == layerName){
+            layer.activate();
+        }
+    }
 }
 
 module.exports.styleAllElements = function (project) {

@@ -5,7 +5,7 @@ var util = require('util');
 var stream = require('stream');
 
 
-var hershey = require('../paperjs_plotter/hershey');
+var hershey = require('../paperJs_plotter/hershey');
 var hatching = require('./lineTools');
 var paperTools = require('./paperTools');
 
@@ -106,7 +106,7 @@ module.exports.hatch = hatch;
 
 
 function layer() {
-    let rawdata = fs.readFileSync('paperjs_plotter/sampleCanvas.json');
+    let rawdata = fs.readFileSync('paperJs_plotter/sampleCanvas.json');
     let json = JSON.parse(rawdata);
 
     let canvas = paperTools.createCanvasFromJson(json,paper)

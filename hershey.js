@@ -1,14 +1,12 @@
 const hershey = require('hersheytext');
 
-const { CompoundPath, Point, Group } = require('paper-jsdom-canvas');
+const { CompoundPath, Point, Group, Rectangle } = require('paper-jsdom-canvas');
 
 module.exports.listFonts = function () {
     console.log('All fonts available', hershey.getFonts());
 
     return hershey.getFonts();
 }
-
-
 
 module.exports.createText = function (text, options) {
     readOptions(options);
@@ -23,7 +21,7 @@ module.exports.createText = function (text, options) {
     });
     group.translate(options.position);
     group.scale(1, -1);
-
+    return group;
 }
 
 module.exports.createTextOnCircle = function (text, options) {
