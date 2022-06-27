@@ -35,7 +35,7 @@ module.exports.createTextOnCircle = function (text, options) {
         textProps.dx *=-1;
     }
     
-    var group = new Group();
+    let group = new Group();
 
     let circ = 2 * Math.PI * options.radius;
     let alphaStart = (360-options.startAngle)/180*Math.PI;

@@ -14,6 +14,14 @@ module.exports.createCanvasFromJson = function (json, paper) {
     return canvas;
 }
 
+module.exports.generateBorderPoints = function (paper,topLeft,bottomRight) {
+    for (let layer of paper.project.layers) { 
+        layer.activate();
+        let tl = new Path.Line(topLeft, new Point(topLeft.x+0.1,topLeft.y));
+        let br = new Path.Line(bottomRight, new Point(bottomRight.x-0.1,bottomRight.y));
+    }
+}
+
 module.exports.setActiveLayer = function (layerName, paper) {
     for (let layer of paper.project.layers) {
         if(layer.name == layerName){

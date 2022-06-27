@@ -6,11 +6,12 @@ var stream = require('stream');
 
 
 var hershey = require('../paperJs_plotter/hershey');
+var trueType = require('./trueType');
 var hatching = require('./lineTools');
 var paperTools = require('./paperTools');
 
 
-function text() {
+function textHershey() {
     var canvas = paper.createCanvas(1200, 900);
         paper.setup(canvas);
         var style = {
@@ -53,8 +54,40 @@ function text() {
         return canvas;
 
 }
+module.exports.textHershey = textHershey;
 
-module.exports.text = text;
+function textTrueType() {
+    var canvas = paper.createCanvas(1200, 900);
+        paper.setup(canvas);
+        var style = {
+            fillColor: new Color(1, 1, 0, 0.5),
+            strokeColor: new Color(0, 0, 0),
+            strokeWidth: 1.5
+        };
+
+        trueType.addFont("dosis","model/fonts/Dosis-Bold.ttf");
+  
+        var first = new Path.Circle([150, 150],100);
+        first.style = style;
+
+        trueType.createText("2023",{position : new Point(100,500),alignment:"left",font:"dosis"});
+        trueType.createText("2023",{position : new Point(100,530),alignment:"center",font:"dosis"});
+        trueType.createText("2023",{position : new Point(100,560),alignment:"right",font:"dosis"});
+
+        paper.view.update();
+
+        var svg = paper.project.exportSVG({ asString: true });
+
+        fs.writeFile(path.resolve('./out.svg'), svg, function (err) {
+            if (err) throw err;
+            console.log('Saved!');
+        });
+
+        return canvas;
+
+}
+
+module.exports.textTrueType = textTrueType;
 
 function hatch() {
     var canvas = paper.createCanvas(1200, 900);
