@@ -171,3 +171,58 @@ function layer() {
 }
 
 module.exports.layer = layer;
+
+function paperSize() {
+    var canvas = paper.createCanvas(700, 900);
+        paper.setup(canvas);
+    
+        let l = new Path.Line(new Point(0,0),new Point(600,800));
+            l.strokeColor = 'black';
+  
+        hershey.createText("TL",{position : new Point(100,100)});
+        hershey.createText("BL",{position : new Point(100,800)});
+        hershey.createText("TR",{position : new Point(650,100)});
+        hershey.createText("BR",{position : new Point(650,800)});
+
+        for (let i=1;i<10;i++){
+            let l = new Path.Line(new Point(i*10,380),new Point(i*10,395));
+            l.strokeColor = 'black';
+            hershey.createText(""+i,{position : new Point(i*10,400),size:5});
+            let t = new Path.Line(new Point(350,i*10),new Point(365,i*10));
+            t.strokeColor = 'black';
+            hershey.createText(""+i,{position : new Point(370,i*10),size:5});
+            let r = new Path.Line(new Point(700-i*10,380),new Point(700-i*10,395));
+            r.strokeColor = 'black';
+            hershey.createText(""+i,{position : new Point(700-i*10,400),size:5});
+            let b = new Path.Line(new Point(350,900-i*10),new Point(365,900-i*10));
+            hershey.createText(""+i,{position : new Point(370,900-i*10),size:5});
+            b.strokeColor = 'black';
+
+            for (let c=1;c<5;c++){
+                let l = new Path.Line(new Point(i*10+c*2,380),new Point(i*10+c*2,385));
+                l.strokeColor = 'black';
+                let t = new Path.Line(new Point(350,i*10+c*2),new Point(355,i*10+c*2));
+            t.strokeColor = 'black';
+            let r = new Path.Line(new Point(700-i*10+c*2,380),new Point(700-i*10+c*2,385));
+            r.strokeColor = 'black';
+            let b = new Path.Line(new Point(350,900-i*10+c*2),new Point(355,900-i*10+c*2));
+            b.strokeColor = 'black';
+            }
+        }
+        
+      
+        paperTools.generateBorderPoints(paper,new Point(0,0),new Point(700,900));
+
+        paper.view.update();
+
+        var svg = paper.project.exportSVG({ asString: true });
+
+        fs.writeFile(path.resolve('./out.svg'), svg, function (err) {
+            if (err) throw err;
+            console.log('Saved!');
+        });
+
+        return canvas;
+
+}
+module.exports.paperSize = paperSize;

@@ -3,9 +3,9 @@ const { CompoundPath, Point, Group, Path, Layer } = require('paper-jsdom-canvas'
 module.exports.createCanvasFromJson = function (json, paper) {
     let canvas = paper.createCanvas(json.size[0], json.size[1]);
     paper.setup(canvas);
-    for (let layer of json.layers) {
+    for (const [layerName, layer] of Object.entries(json.layers)) {
         let l = new Layer({
-            name: layer.name,
+            name: layerName,
             strokeColor: layer.strokeColor,
             lineWidth: layer.lineWidth,
             fillColor:null

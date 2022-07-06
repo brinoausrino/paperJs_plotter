@@ -1,15 +1,13 @@
 {
     "size":[900,700],
-    "layers":[
-        {
-            "name":"main",
+    "layers":{
+        "main":{
             "strokeColor":"black",
             "lineWidth":1
         },
-        {
-            "name":"secondary",
+        "secondary":{
             "strokeColor":"green",
             "lineWidth":1
         }
-    ]
+    }
 }
