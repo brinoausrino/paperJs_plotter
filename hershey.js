@@ -85,6 +85,39 @@ module.exports.createTextOnCircle = function (text, options) {
 
 }
 
+module.exports.createTextInArea = function (text, options) {
+    readOptions(options);
+    let textProps = prepareText(text,options);
+    var group = new Group();
+
+    let currentPos = new Point(0,0);
+    let textBlocks = text.split("\n");
+
+    let wGroup = new Group();
+    textBlocks.forEach(element => {
+        let word = element.split(" ");
+        
+        word.forEach(element => {
+            let p = createTextPath(element['d'], options, textProps.scale);
+            p.translate(currentPos);
+            currentPos.x += (element['width'] * textProps.scale);
+            
+            if (currentPos.x > options.width){
+                group.addChildren(wGroup.getItems());
+                currentPos = new Point(0,currentPos.y + textProps.scale);
+                wGroup = new Group();
+            }
+            wGroup.addChild(p);  
+        })
+    })
+    group.addChildren(wGroup.getItems());
+    wGroup.remove();
+
+    group.translate(options.position);
+    group.scale(1, -1);
+    return group;
+}
+
 function readOptions(options) {
     // set text options
     options = options ? options : {};
@@ -93,6 +126,7 @@ function readOptions(options) {
     options.position = options.position ? options.position : new Point(0, 0);
     options.strokeColor = options.strokeColor ? options.strokeColor : 'black';
     options.alignment = options.alignment ? options.alignment :"left";
+    options.width = options.width ? options.width : 100;
     return options;
 }
 

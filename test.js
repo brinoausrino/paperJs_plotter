@@ -19,7 +19,22 @@ function textHershey() {
             strokeColor: new Color(0, 0, 0),
             strokeWidth: 1.5
         };
-  
+
+        let py = 100;
+        let dy = 20;
+        hershey.createText('Apfel Birne Quitte',{position : new Point(150,py)});
+        py += dy;
+        hershey.createText('Apfel Dittrichshütte 90%',{position : new Point(150,py)});
+        py += dy;
+        hershey.createText('Birne Dittrichshütte 5%',{position : new Point(150,py)});
+        py += dy;
+        hershey.createText('Quitte Elbe 5%',{position : new Point(150,py)});
+        py += dy;
+        hershey.createText('2022',{position : new Point(150,py)});
+
+        
+
+        /*
         var first = new Path.Circle([150, 150],100);
         first.style = style;
         hershey.createTextOnCircle("left",{position : new Point(150,150),orientation:"cw",alignment:"left",startAngle:0});
@@ -41,7 +56,7 @@ function textHershey() {
         hershey.createText("left",{position : new Point(100,500),alignment:"left"});
         hershey.createText("center",{position : new Point(100,530),alignment:"center"});
         hershey.createText("right",{position : new Point(100,560),alignment:"right"});
-
+        */
         paper.view.update();
 
         var svg = paper.project.exportSVG({ asString: true });

@@ -1,5 +1,4 @@
 const { CompoundPath, Point, Group, Path } = require('paper-jsdom-canvas');
-const { path } = require('../app');
 
 
 module.exports.subdivideLine = function (line, options) {
@@ -123,6 +122,7 @@ function readHatchOptions(options) {
     options.distance = options.distance ? options.distance : 10;
     options.angle = options.angle ? options.angle : 0;
     options.strokeColor = options.strokeColor ? options.strokeColor : 'black';
+    options.subdivide = options.subdivide ? options.subdivide : -1;
     return options;
 }
 

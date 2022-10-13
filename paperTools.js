@@ -1,4 +1,5 @@
 const { CompoundPath, Point, Group, Path, Layer } = require('paper-jsdom-canvas');
+var fs = require('fs');
 
 module.exports.createCanvasFromJson = function (json, paper) {
     let canvas = paper.createCanvas(json.size[0], json.size[1]);
@@ -46,3 +47,52 @@ function styleChildren(elem, style) {
         }
     } 
 }
+
+async function saveCanvasToPNGFile(filename, canvas)
+{
+
+    // Saving the canvas to a file.
+    let ready = false 
+    out = fs.createWriteStream(filename);
+    stream = canvas.pngStream();
+
+
+    stream.on('data', function(chunk) {
+        out.write(chunk);
+    });
+
+    stream.on('end', function() {
+        console.log('saved png '+filename);
+        ready = true;
+    });
+    
+    while(!ready){
+        await delay(20);
+    }
+    return{filename:filename};
+}
+module.exports.saveCanvasToPNGFile = saveCanvasToPNGFile;
+
+function delay(time) {
+    return new Promise(resolve => setTimeout(resolve, time));
+  } 
+
+async function saveCanvasToJPGFile(filename,canvas)
+{
+    var fullpath = filename;
+
+    // Saving the canvas to a file.
+    out = fs.createWriteStream(fullpath);
+    stream = canvas.jpegStream({quality: 80});
+
+    stream.on('data', function(chunk) {
+        out.write(chunk);
+    });
+
+    stream.on('end', function() {
+        console.log('saved jpeg '+filename);
+        return{filename:filename};
+    });
+    
+}
+module.exports.saveCanvasToJPGFile = saveCanvasToJPGFile;
