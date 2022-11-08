@@ -1,15 +1,27 @@
 const { CompoundPath, Point, Group, Path } = require('paper-jsdom-canvas');
 
 
-module.exports.subdivideLine = function (line, options) {
+function subdividePath(line, options) {
     readSubdivideOptions(options);
 
     for(let i=line.length; i> options.distance;i-=options.distance){
         let p= line.getPointAt(i);
-        line.insert(1,p);
+        line.divideAt(i);
     }
     
 }
+module.exports.subdividePath = subdividePath;
+
+function subdivideItem(item, options) {
+    for (let c of item.getChildren()){
+        if (c.className == 'Path'){
+            subdividePath(c,options);
+        }else{
+            subdivideItem(c,options);
+        }
+    }
+}
+module.exports.subdivideItem = subdivideItem;
 
 module.exports.hatch = function (path, options) {
     readHatchOptions(options);
@@ -105,9 +117,13 @@ function drawHatchLine(object, pStart, v,options){
         let pm = new Point(p0.x + 0.5*(p1.x-p0.x),p0.y + 0.5*(p1.y-p0.y));
 
         if(object.contains(pm)){
+
             let intersectionPath = new Path.Line(
                 p0,p1
             );
+            if (options.subdivide != -1){
+                subdividePath(intersectionPath,options);
+            }
             intersectionPath.parent = intersectionGroup;
             intersectionPath.strokeColor = options.strokeColor;
         }    

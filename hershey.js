@@ -82,7 +82,7 @@ module.exports.createTextOnCircle = function (text, options) {
     });
     group.translate(options.position);
     group.scale(1, -1,options.position);
-
+    return group;
 }
 
 module.exports.createTextInArea = function (text, options) {

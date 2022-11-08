@@ -15,26 +15,34 @@ function textHershey() {
     var canvas = paper.createCanvas(1200, 900);
         paper.setup(canvas);
         var style = {
-            fillColor: new Color(1, 1, 0, 0.5),
-            strokeColor: new Color(0, 0, 0),
+            fillColor: new Color(0, 0, 0,0),
+            strokeColor: new Color(0,0,0),
             strokeWidth: 1.5
         };
 
-        let py = 100;
-        let dy = 20;
-        hershey.createText('Apfel Birne Quitte',{position : new Point(150,py)});
-        py += dy;
-        hershey.createText('Apfel Dittrichshütte 90%',{position : new Point(150,py)});
-        py += dy;
-        hershey.createText('Birne Dittrichshütte 5%',{position : new Point(150,py)});
-        py += dy;
-        hershey.createText('Quitte Elbe 5%',{position : new Point(150,py)});
-        py += dy;
-        hershey.createText('2022',{position : new Point(150,py)});
+        var style2 = {
+            fillColor: new Color(0, 0, 0),
+            strokeColor: new Color(0, 0, 0),
+            strokeWidth: 0
+        };
 
+  /*
+        trueType.addFont("dosis","model/fonts/Dosis-Bold.ttf");
+        let t= trueType.createText("Plot",{position : new Point(100,500),alignment:"left",font:"dosis",size:30});
+        let t2 = trueType.createText("Calendar",{position : new Point(100,540),alignment:"left",font:"dosis",size:30});
+        t2.style = style2;
+        t.style = style2;
+
+        var circle = new Path.Circle([250, 510],60);
+        circle.style = style;
+        var rect = new Path.Rectangle([190,506],[64,40]);
+        let fin = circle.subtract(rect,{insert:true});
+        rect.remove();
+        circle.remove()
+        hatching.hatch(fin,{angle:45,distance:25});
+*/
+/*
         
-
-        /*
         var first = new Path.Circle([150, 150],100);
         first.style = style;
         hershey.createTextOnCircle("left",{position : new Point(150,150),orientation:"cw",alignment:"left",startAngle:0});
@@ -52,11 +60,25 @@ function textHershey() {
         hershey.createTextOnCircle("0° test",{position : new Point(450,150),orientation:"ccw",alignment:"center",startAngle:0});
         hershey.createTextOnCircle("120° test",{position : new Point(450,150),orientation:"ccw",alignment:"center",startAngle:120});
         hershey.createTextOnCircle("240° test",{position : new Point(450,150),orientation:"ccw",alignment:"center",startAngle:240});
+*/
 
-        hershey.createText("left",{position : new Point(100,500),alignment:"left"});
-        hershey.createText("center",{position : new Point(100,530),alignment:"center"});
-        hershey.createText("right",{position : new Point(100,560),alignment:"right"});
-        */
+
+        let t1 = hershey.createText("1234567890 no subdiv ",{position : new Point(150,50), size:5});
+
+        let t11 = hershey.createText("1234567890 distance 5 ",{position : new Point(150,60), size:5});
+        let t2 = hershey.createText("1234567890 distance 1 ",{position : new Point(150,70), size:5});
+        let t3 = hershey.createText("1234567890 distance 0.5",{position : new Point(150,80), size:5});
+        let t4 = hershey.createText("1234567890 distance 0.1",{position : new Point(150,90), size:5});
+        
+        hatching.subdivideItem(t11,{distance:5});
+        hatching.subdivideItem(t2,{distance:1});
+        hatching.subdivideItem(t3,{distance:0.5});
+        hatching.subdivideItem(t4,{distance:0.1});
+
+
+        
+
+
         paper.view.update();
 
         var svg = paper.project.exportSVG({ asString: true });
@@ -88,6 +110,7 @@ function textTrueType() {
         trueType.createText("2023",{position : new Point(100,500),alignment:"left",font:"dosis"});
         trueType.createText("2023",{position : new Point(100,530),alignment:"center",font:"dosis"});
         trueType.createText("2023",{position : new Point(100,560),alignment:"right",font:"dosis"});
+
 
         paper.view.update();
 

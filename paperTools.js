@@ -15,11 +15,38 @@ module.exports.createCanvasFromJson = function (json, paper) {
     return canvas;
 }
 
+module.exports.mergeLayers = function (json,paper) {
+    let layerNames = [];
+
+    for (const [layerName, layerSettings] of Object.entries(json.layers)) {
+        let lName = layerSettings.strokeColor + "_" + layerSettings.lineWidth;
+        const found = paper.project.layers.find(layer => layer.name === lName);
+        if( typeof(found) == "undefined" ){
+            let l = new Layer({
+                name: lName,
+                strokeColor: layerSettings.strokeColor,
+                lineWidth: layerSettings.lineWidth,
+                fillColor:null
+            });
+        }
+        layerNames.push({
+            old:layerName,
+            new:lName
+        })
+    }
+    for(l of layerNames){
+        let oldlayer = paper.project.layers.find(layer => layer.name === l.old);
+        let masterLayer = paper.project.layers.find(layer => layer.name === l.new);
+        masterLayer.addChildren(oldlayer.getChildren());
+        oldlayer.remove();
+    }
+}
+
 module.exports.generateBorderPoints = function (paper,topLeft,bottomRight) {
     for (let layer of paper.project.layers) { 
-        layer.activate();
-        let tl = new Path.Line(topLeft, new Point(topLeft.x+0.1,topLeft.y));
-        let br = new Path.Line(bottomRight, new Point(bottomRight.x-0.1,bottomRight.y));
+            layer.activate();
+            let tl = new Path.Line(topLeft, new Point(topLeft.x+0.1,topLeft.y));
+            let br = new Path.Line(bottomRight, new Point(bottomRight.x-0.1,bottomRight.y));
     }
 }
 
