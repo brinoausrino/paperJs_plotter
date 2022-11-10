@@ -107,7 +107,7 @@ function textTrueType() {
         var first = new Path.Circle([150, 150],100);
         first.style = style;
 
-        trueType.createText("2023",{position : new Point(100,500),alignment:"left",font:"dosis"});
+        trueType.createText("LOADING..",{position : new Point(100,500),alignment:"left",font:"dosis"});
         trueType.createText("2023",{position : new Point(100,530),alignment:"center",font:"dosis"});
         trueType.createText("2023",{position : new Point(100,560),alignment:"right",font:"dosis"});
 
