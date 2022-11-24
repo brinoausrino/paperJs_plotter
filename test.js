@@ -62,8 +62,8 @@ function textHershey() {
         hershey.createTextOnCircle("240° test",{position : new Point(450,150),orientation:"ccw",alignment:"center",startAngle:240});
 */
 
-
-        let t1 = hershey.createText("1234567890 no subdiv ",{position : new Point(150,50), size:5});
+        let v= hershey.listFonts();
+        let t1 = hershey.createText("一月 ",{position : new Point(150,50), size:5});
 
         let t11 = hershey.createText("1234567890 distance 5 ",{position : new Point(150,60), size:5});
         let t2 = hershey.createText("1234567890 distance 1 ",{position : new Point(150,70), size:5});

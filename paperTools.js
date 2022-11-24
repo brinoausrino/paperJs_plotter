@@ -42,11 +42,26 @@ module.exports.mergeLayers = function (json,paper) {
     }
 }
 
-module.exports.generateBorderPoints = function (paper,topLeft,bottomRight) {
+module.exports.translateAllElements = function (position,project) {
+    for (let layer of project.layers) {
+        for (let child of layer.children) {
+            child.position.x += position.x;
+            child.position.y += position.y;
+        }
+    }
+}
+
+module.exports.generateBorderPoints = function (paper,topLeft,bottomRight, innerBorders=false) {
     for (let layer of paper.project.layers) { 
             layer.activate();
             let tl = new Path.Line(topLeft, new Point(topLeft.x+0.1,topLeft.y));
             let br = new Path.Line(bottomRight, new Point(bottomRight.x-0.1,bottomRight.y));
+
+            if(innerBorders){
+                let tli = new Path.Line(topLeft, new Point(topLeft.x+1.5,topLeft.y+1.5));
+                let bri = new Path.Line(bottomRight, new Point(bottomRight.x-1.5,bottomRight.y-1.5));
+            }
+            
     }
 }
 
