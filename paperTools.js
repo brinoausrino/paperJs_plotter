@@ -1,5 +1,6 @@
 const { CompoundPath, Point, Group, Path, Layer } = require('paper-jsdom-canvas');
 var fs = require('fs');
+const { console } = require('inspector');
 
 module.exports.createCanvasFromJson = function (json, paper) {
     let canvas = paper.createCanvas(json.size[0], json.size[1]);
@@ -12,6 +13,7 @@ module.exports.createCanvasFromJson = function (json, paper) {
             fillColor:null
         });
     }
+
     return canvas;
 }
 

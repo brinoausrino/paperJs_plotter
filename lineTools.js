@@ -23,6 +23,7 @@ function subdivideItem(item, options) {
 }
 module.exports.subdivideItem = subdivideItem;
 
+
 module.exports.hatch = function (path, options) {
     readHatchOptions(options);
 

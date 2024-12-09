@@ -1,4 +1,4 @@
-const { paper,view, Color,Path,Point } = require('paper-jsdom-canvas');
+const { paper,view, Color,Path,Point,Group } = require('paper-jsdom-canvas');
 var path = require('path');
 var fs = require('fs');
 var util = require('util');
@@ -9,15 +9,52 @@ var hershey = require('../paperJs_plotter/hershey');
 var trueType = require('./trueType');
 var hatching = require('./lineTools');
 var paperTools = require('./paperTools');
+const { query } = require('express');
 
+function delay(time) {
+    return new Promise(resolve => setTimeout(resolve, time));
+}
 
-function textHershey() {
-    var canvas = paper.createCanvas(1200, 900);
+async function testInvisibleLines() {
+    var canvas = paper.createCanvas(700, 900);
+        paper.setup(canvas);
+        var style = {
+            fillColor: new Color(0, 0, 0,0),
+            strokeColor: new Color(255,0,0),
+            strokeWidth: 0.3
+        };
+
+        var style2 = {
+            fillColor: new Color(0, 0, 0),
+            strokeColor: new Color(0, 255, 0),
+            strokeWidth: 0
+        };
+
+  
+
+        paperTools.generateBorderPoints(paper, new Point(0, 0), new Point(420, 297),true);
+
+        paper.view.update();
+
+        var svg = paper.project.exportSVG({ asString: true });
+
+        fs.writeFile(path.resolve('./out.svg'), svg, function (err) {
+            if (err) throw err;
+            console.log('Saved!');
+        });
+
+        return canvas;
+
+}
+module.exports.testInvisibleLines = testInvisibleLines;
+
+async function textHershey() {
+    var canvas = paper.createCanvas(700, 900);
         paper.setup(canvas);
         var style = {
             fillColor: new Color(0, 0, 0,0),
             strokeColor: new Color(0,0,0),
-            strokeWidth: 1.5
+            strokeWidth: 0.3
         };
 
         var style2 = {
@@ -26,9 +63,26 @@ function textHershey() {
             strokeWidth: 0
         };
 
-  /*
+        //let ready = false;
+        
+          //while(!ready){
+            //await delay(20);
+          //}
+
+        /*Group qr;
+        qr.onLoad = function () {
+                bg.position.x = bg.size.width * 0.5;
+                bg.position.y = bg.size.height * 0.5;
+                ready = true;
+            };
+
+        while (!ready) {
+            await delay(20);
+        }*/
+
+  
         trueType.addFont("dosis","model/fonts/Dosis-Bold.ttf");
-        let t= trueType.createText("Plot",{position : new Point(100,500),alignment:"left",font:"dosis",size:30});
+  /*      let t= trueType.createText("Plot",{position : new Point(100,500),alignment:"left",font:"dosis",size:30});
         let t2 = trueType.createText("Calendar",{position : new Point(100,540),alignment:"left",font:"dosis",size:30});
         t2.style = style2;
         t.style = style2;
@@ -61,7 +115,7 @@ function textHershey() {
         hershey.createTextOnCircle("120° test",{position : new Point(450,150),orientation:"ccw",alignment:"center",startAngle:120});
         hershey.createTextOnCircle("240° test",{position : new Point(450,150),orientation:"ccw",alignment:"center",startAngle:240});
 */
-
+/*
         let v= hershey.listFonts();
         let t1 = hershey.createText("一月 ",{position : new Point(150,50), size:5});
 
@@ -76,8 +130,34 @@ function textHershey() {
         hatching.subdivideItem(t4,{distance:0.1});
 
 
+        */
+/*
+        let persons = [
+            "Martin Herrmann",
+            "Michael Eberlein",
+            "Martin Flemming",
+            "Brian Eschrich",
+            "Nick Schwarzenberg",
+            "Richard Kienitz",
+            "Christoph Spaniol"
+        ]
+        
+        let y = 150;
+*/
+        //for (person of persons){
+          //  hershey.createText("SPENDENBOX",{position : new Point(40,y),size:25});
+          //  hershey.createText(person,{position : new Point(40,y+10), size:5});
+          //  y+=50;
+       // }
+        
+        
+        //trueType.createText("40€",{position : new Point(50,100),alignment:"left",font:"dosis",size:50});
+        //trueType.createText("15€",{position : new Point(50,200),alignment:"left",font:"dosis",size:35});
+      
+        //hershey.createText("plotcalendar.com/creator",{position : new Point(40,150), size:8});
         
 
+        paperTools.generateBorderPoints(paper, new Point(0, 0), new Point(420, 297),true);
 
         paper.view.update();
 
@@ -98,7 +178,7 @@ function textTrueType() {
         paper.setup(canvas);
         var style = {
             fillColor: new Color(1, 1, 0, 0.5),
-            strokeColor: new Color(0, 0, 0),
+            strokeColor: new Color(0.6, 0, 0),
             strokeWidth: 1.5
         };
 
